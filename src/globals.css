@@ -1,0 +1,330 @@
+/* ===========================
+   Tailwind v4 base import
+   =========================== */
+@import "tailwindcss";
+
+/* Optional: enable a `dark:` variant that keys off `.dark` on <html> */
+@custom-variant dark (&:is(.dark *));
+
+/* ===========================
+   Design tokens (CSS variables)
+   Light + Dark palettes
+   =========================== */
+@layer base {
+  :root {
+    /* Brand neutrals */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --black: 0 0% 8%;
+    --white: 0 0% 100%;
+
+    /* Brand yellow scale */
+    --yellow: 45 100% 51%;
+    --yellow-muted: 45 100% 88%;
+    --yellow-dark: 35 100% 45%;
+
+    /* UI surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+    --card-hover: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    /* Primary (dark UI) */
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary / muted */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent (CTA yellow) */
+    --accent: 45 100% 51%;
+    --accent-foreground: 0 0% 8%;
+    --accent-hover: 35 100% 45%;
+
+    /* Status / borders / effects */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 45 100% 51%;
+
+    /* Gradients & shadows */
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(0 0% 8%) 0%,
+      hsl(0 0% 20%) 100%
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(45 100% 51%) 0%,
+      hsl(35 100% 45%) 100%
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      hsl(0 0% 100%) 0%,
+      hsl(0 0% 98%) 100%
+    );
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.1);
+    --shadow-yellow: 0 10px 30px -10px hsl(45 100% 51% / 0.3);
+
+    /* Radii */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+/* Base resets using tokens */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* ===========================
+   Map CSS vars → Tailwind tokens
+   (enables utilities like bg-yellow-dark)
+   =========================== */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* custom yellows */
+  --color-yellow: hsl(var(--yellow));
+  --color-yellow-muted: hsl(var(--yellow-muted));
+  --color-yellow-dark: hsl(var(--yellow-dark));
+}
+
+/* ===========================
+   Components & Utilities
+   (safe @apply — no hover: inside @apply)
+   =========================== */
+@layer components {
+  .container-custom {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .section-padding {
+    @apply py-16 lg:py-24;
+  }
+
+  /* Gradient text utility */
+  .gradient-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Card-like video shell */
+  .video-placeholder {
+    @apply flex items-center justify-center rounded-lg border-2 border-dashed
+           border-accent/30 bg-gradient-to-br from-primary via-primary/90 to-primary/80
+           text-primary-foreground transition-colors;
+  }
+  .video-placeholder:hover {
+    @apply border-accent/60;
+  }
+
+  /* Motion helpers */
+  .hover-lift {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  /* Buttons (CTA) */
+  .btn-hero {
+    @apply rounded-lg px-8 py-4 text-lg font-semibold
+           bg-accent text-accent-foreground transition-all duration-300;
+    box-shadow: 0 10px 30px -10px hsl(45 100% 51% / 0.3);
+  }
+  .btn-hero:hover {
+    /* avoid hover: inside @apply to keep Tailwind v4 happy */
+    background-color: hsl(var(--yellow-dark));
+    transform: scale(1.05);
+    box-shadow: 0 15px 35px -5px hsl(45 100% 51% / 0.4);
+  }
+
+  .btn-outline-yellow {
+    @apply rounded-lg px-6 py-3 font-medium border-2
+           border-accent text-accent transition-all duration-300;
+  }
+  .btn-outline-yellow:hover {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+
+  .btn-tilak {
+    @apply flex flex-row items-center cursor-pointer;
+    background: oklch(65% 0.18 280);
+  }
+  .btn-tilak:hover {
+    background: oklch(75% 0.2 285) !important;
+  }
+}
+
+/* ===========================
+   Keyframes
+   =========================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes pulseYellow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 hsl(45 100% 51% / 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px hsl(45 100% 51% / 0);
+  }
+}
+.pulse-yellow {
+  animation: pulseYellow 2s infinite;
+}
+
+/* shadcn base (keep your existing tokens/vars) */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Robust gradient word utility used in the hero */
+/* .gradient-text {
+  background-image: linear-gradient(90deg, #f7c744, #ffdd77);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+} */
+
+/* gradient text helper (yellow -> orange) */
+.gradient-text {
+  background: linear-gradient(90deg, hsl(45 100% 51%), hsl(35 100% 45%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* primary CTA (solid yellow) */
+.btn-hero {
+  @apply px-8 py-4 rounded-xl font-semibold text-lg
+         bg-[hsl(var(--accent))] text-black
+         transition-all duration-300 hover:brightness-95;
+  box-shadow: 0 10px 30px -10px hsl(45 100% 51% / 0.3);
+}
+.btn-hero:hover {
+  box-shadow: 0 15px 35px -5px hsl(45 100% 51% / 0.4);
+}
+
+/* outline CTA (yellow stroke) */
+.btn-outline-yellow {
+  @apply px-6 py-3 rounded-xl font-medium
+         border border-[hsl(var(--accent))] text-[hsl(var(--accent))]
+         transition-all duration-300 hover:bg-[hsl(var(--accent))/0.10];
+}
+
+@layer components {
+}
