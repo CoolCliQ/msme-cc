@@ -1,6 +1,6 @@
 import "./globals.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Pitch from "./pages/aligarh/Pitch";
+import Pitch from "./pages/msme/Pitch";
 
 function App() {
   return (
