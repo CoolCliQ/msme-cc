@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -548,7 +548,7 @@ const Hero = () => {
       </main>
 
       {/* Enhanced Animations & Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes gridMove {
           0% {
             transform: translate(0, 0);
